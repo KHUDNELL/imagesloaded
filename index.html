@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+      body {
+        overflow-x: hidden;
+      }
+        #myProgress {
+          width: 80%;
+          background-color: #ddd;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 0;
+        }
+        
+        #myBar {
+          width: 1%;
+          height: 30px;
+          background-color: #04AA6D;
+          transition: width .2s;
+        }
+        #container {
+          visibility: hidden;
+        }
+        img {
+          width: 100%;      
+
+        }
+        #overlay {
+          width: 100%;
+          height: 100vh;
+          background-color: black;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 9998;
+          visibility: hidden;
+        }
+        #title {
+          color: white;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-family: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
+          font-size: 55px;
+          z-index: 9999;
+          visibility: hidden;
+
+        }
+        </style>  
+</head>
+<body>
+    <div id="overlay"></div>
+
+    <div id="title">
+      SANDBOX DEVELOPMENT
+    </div>
+
+    <div id="myProgress">
+        <div id="myBar"></div>
+      </div>
+
+    
+    <div id="container">
+        <img src="location_2020/_DSC1307.jpg" alt="">
+        <img src="location_2020/_DSC1634-2_.jpg" alt="">
+        <img src="location_2020/BEAUS_GolfTeam_0128edit.jpg" alt="">
+        <img src="location_2020/bird.jpg" alt="">
+        <img src="location_2020/DSC_0030_2.jpg" alt="">
+        <img src="location_2020/DSC_1582_MJ_05_14.jpg" alt="">
+        <img src="location_2020/DSC_8711crop.jpg" alt="">
+        <img src="location_2020/ECUM_RobinTutor-9882.jpg" alt="">
+        <img src="location_2020/ECUM_ScottGremillion-6261.jpg" alt="">
+        <img src="location_2020/G2NK8022_editedBM.jpg" alt="">
+        <img src="location_2020/INT_ECU_IsaacMorton_3.jpg" alt="">
+        <img src="location_2020/SPIRIT_Bike_DSC_0232.jpg" alt="">
+        <img src="location_2020/SRMC_DoctorsWalking_2060_size.jpg" alt="">
+        <img src="location_2020/SRMC_Oct28_2623_edit_2-19-14.jpg" alt="">
+        <img src="location_2020/Sunset-&-tree.jpg" alt="">
+        <img src="location_2020/shep15_editedBM.jpg" alt="">      
+        <img src="location_2020/ChelsyBrown_DSC_5080.jpg" alt="">
+    </div>
+    <script>
+        var imgLoad = imagesLoaded('#container');
+        let imgsTotal = imgLoad.images.length; // 16
+
+        let step = 100 / imgsTotal;
+        console.log("total images: " + imgsTotal);
+        console.log("steps: " + step);
+        let complete = 0;
+        console.log(step);        
+        imgLoad.on( 'progress', function( instance, image ) {   
+
+        var result = image.isLoaded ? 'loaded' : 'broken';
+        console.log( 'image is ' + result + ' for ' + image.img.src );
+        complete += step;      
+        let elem = document.getElementById('myBar');
+        elem.style.width = complete + "%";
+});
+
+        imgLoad.on( 'always', function( instance ) {
+
+          const tl = gsap.timeline();
+          tl.from('#overlay', {
+            y: window.innerHeight,
+            delay: 2,
+            autoAlpha: 0
+          }).from('#title', {
+            autoAlpha: 0,
+            scale: 8,
+            ease: 'power2.inOut'
+          }).to('#title', {
+            x: window.innerWidth,
+            duration: 2,
+            delay: 2,
+            ease: 'power2.out',
+            autoAlpha: 0
+          }).set("#myProgress", {
+            autoAlpha: 0
+          }).to('#overlay', {
+            y: -(window.innerHeight),
+            autoAlpha: 1
+          })
+        });
+    </script>
+</body>
+</html>
